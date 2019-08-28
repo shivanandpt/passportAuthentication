@@ -1,32 +1,18 @@
 const express = require('express');
 const cookieParser = require('cookie-parser');
+const uuid = require('uuid/v4');
 
-const app = express();
+var app = express();
 
-app.use(cookieParser());
+var port = 3000;
 
-let user = {
-	name: "Tiger",
-	age: 35,
-	sex: "male"
-};
-
-app.get("/", function (req, res) {
-	return res.send("server started\n");
+app.get("/", function(req, res) {
+	const uniqueId = uuid();
+	res.send("Hitting the landing page. Generated uniqueId as " + uniqueId + "\n");
 });
 
-app.get("/setUser", function(req, res){
-	res.cookie("userData", user, {maxAge: 10000});
-	return res.send("cookie set");
-
-});
-
-app.get("/getUser", function (req, res) {
-	return res.send(req.cookies);
-});
-
-app.listen(3000, (err) => {
-	if(err)
-	throw err
-	console.log("server started on port 3000");
+app.listen(port, err => {
+	if (err)
+		throw err 
+	console.log("Sever started on port " + port);
 });
